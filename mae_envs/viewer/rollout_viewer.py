@@ -10,7 +10,7 @@ class RolloutViewer():
 
     def __init__(self, env):
         self.env = env
-        self.elapsed = [0]
+        self.elapsed = []
         self.seed = self.env.seed()
         self.n_agents = self.env.metadata['n_actors']
         self.action_types = list(self.env.action_space.spaces.keys())
@@ -20,7 +20,7 @@ class RolloutViewer():
         self.action_mod_index = 0
         self.action_type_mod_index = 0
         self.horizon = 1000
-        self.iterations = 10
+        self.iterations = 12
         self.action = self.zero_action(self.env.action_space)
         self.env_reset()
 
