@@ -16,8 +16,8 @@
             lock_out_of_vision: false,
 
             # Scenario
-            n_substeps: 15,
-            horizon: 80,
+            n_substeps: 1,
+            horizon: 1000,
             scenario: 'quadrant',
             prep_fraction: 0.4,
             rew_type: "joint_zero_sum",

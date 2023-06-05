@@ -216,7 +216,7 @@ def outside_quadrant_placement(grid, obj_size, metadata, random_state):
     return poses[random_state.randint(0, 3)]
 
 
-def make_env(n_substeps=15, horizon=80, deterministic_mode=False,
+def make_env(n_substeps=1, horizon=1000, deterministic_mode=False,
              floor_size=6.0, grid_size=30, door_size=2,
              n_hiders=1, n_seekers=1, max_n_agents=None,
              n_boxes=2, n_ramps=1, n_elongated_boxes=0,
