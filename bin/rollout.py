@@ -29,7 +29,7 @@ def main(argv):
     core_dir = abspath(join(dirname(__file__), '..'))
     envs_dir = 'mae_envs/envs',
     xmls_dir = 'xmls',
-    iterations = 5
+    iterations = 10
 
 
     sizes = [1, 2, 4, 8, 16, 32, 64, 128, 256]
@@ -51,7 +51,7 @@ def main(argv):
                     size_times[size].append(dt)
 
                 print("Time: ", dt)
-        with open(f"rollout_times_100_ovr.json", "w") as f:
+        with open(f"rollout_times_100_ovr1.json", "w") as f:
             json.dump(size_times, f)
 
 if __name__ == '__main__':
