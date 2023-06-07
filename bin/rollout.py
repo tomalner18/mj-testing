@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import logging
 import click
+import json
 import time
 import numpy as np
 from os.path import abspath, dirname, join
@@ -28,14 +29,30 @@ def main(argv):
     core_dir = abspath(join(dirname(__file__), '..'))
     envs_dir = 'mae_envs/envs',
     xmls_dir = 'xmls',
+    iterations = 5
 
 
-    sizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512]
+    sizes = [1, 2, 4, 8, 16, 32, 64, 128, 256]
+    size_times = dict()
     if len(names) == 1:  # examine the environment
-        for size in sizes:
-            args_list = [(env_name, kwargs, size, core_dir, envs_dir, xmls_dir, RolloutViewer)]
-            with Pool(size) as p:
-                p.map(parallel_examine_env, args_list * size)
+        for i in range(iterations):
+            print("Iteration: ", i)
+            for size in sizes:
+                print("Size: ", size)
+                args_list = [(env_name, kwargs, size, core_dir, envs_dir, xmls_dir, RolloutViewer)]
+                st = time.time()
+                with Pool(size) as p:
+                    p.map(parallel_examine_env, args_list * size)
+                dt = time.time() - st
+                # Write reset and rollout times to size marked file
+                if size not in size_times:
+                    size_times[size] = [dt]
+                else:
+                    size_times[size].append(dt)
+
+                print("Time: ", dt)
+        with open(f"rollout_times_100_ovr.json", "w") as f:
+            json.dump(size_times, f)
 
 if __name__ == '__main__':
     logging.getLogger('').handlers = []

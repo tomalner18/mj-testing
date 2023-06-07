@@ -19,8 +19,7 @@ class RolloutViewer():
         self.agent_mod_index = 0
         self.action_mod_index = 0
         self.action_type_mod_index = 0
-        self.horizon = 1000
-        self.iterations = 12
+        self.horizon = 100
         self.action = self.zero_action(self.env.action_space)
         self.env_reset()
 
@@ -65,19 +64,8 @@ class RolloutViewer():
     def run(self, size=1, once=False):
         
         rts = []
-        for j in range(self.iterations):
-            print(j)
-            st = time.time()
-            for i in range(self.horizon):
-                _, _, _, env_info = self.env.step(self.action)
+        st = time.time()
+        for i in range(self.horizon):
+            _, _, _, env_info = self.env.step(self.action)
 
-            et = time.time()
-            dt = et - st
 
-            self.env_reset()
-            rts.append(dt)
-
-        # Write reset and rollout times to size marked file
-        with open(f"rollout_times/{size}.txt", "w") as f:
-            f.write(f"Reset times: {self.elapsed}\n")
-            f.write(f"Rollout times: {rts}\n")
